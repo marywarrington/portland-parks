@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Meetups feature.
+ */
+
+include_once 'meetups.features.inc';
