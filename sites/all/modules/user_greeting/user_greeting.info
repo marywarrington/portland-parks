@@ -1,0 +1,5 @@
+name = User Greeting
+description = Display different splash screens based on user type
+package = Custom Modules
+core = 7.x
+files[] = user_greeting.module

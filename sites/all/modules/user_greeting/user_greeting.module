@@ -1,0 +1,70 @@
+<?php
+
+function user_greeting_menu() {
+    $items = array();
+    $items['hello'] = array(
+        'title' => "Welcome!",
+        'page callback' => 'say_hey',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    $items['adios_admin'] = array(
+        'title' => "Goodbye!",
+        'page callback' => 'say_goodbye_admin',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    $items['adios_moderator'] = array(
+        'title' => "Goodbye!",
+        'page callback' => 'say_goodbye_moderator',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    $items['adios_authenticated'] = array(
+        'title' => "Goodbye!",
+        'page callback' => 'say_goodbye_authenticated',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function say_hey() {
+    global $user;
+    if(in_array('administrator', array_values($user->roles))) {
+      return '<p>Hey! You are an administrator</p>';
+  } else if (in_array('moderator', array_values($user->roles))) {
+      return '<p>Hey! You are a moderator!</p>';
+  } else if (in_array('authenticated', array_values($user->roles))) {
+      return '<p>Hey! You are an authenticated user!</p>';
+  } else {
+      return '<p>Hey!</p>';
+  }
+}
+
+function user_greeting_user_login() {
+    $_GET['destination'] = 'hello';
+}
+
+function user_greeting_user_logout() {
+    global $user;
+    if (in_array('administrator', array_values($user->roles))) {
+        $_GET['destination'] = 'adios_admin';
+    } else if (in_array('moderator', array_values($user->roles))) {
+        $_GET['destination'] = 'adios_moderator';
+    } else if (in_array('authenticated', array_values($user->roles))) {
+        $_GET['destination'] = 'adios_authenticated';
+    }
+}
+
+function say_goodbye_admin() {
+    return '<p>See you later, administrator</p>';
+}
+
+function say_goodbye_moderator() {
+    return '<p>See you later, moderator!</p>';
+}
+
+function say_goodbye_authenticated() {
+    return '<p>See you later, authenticated user!!</p>';
+}
